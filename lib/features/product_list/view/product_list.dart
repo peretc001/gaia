@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gaia/features/product_list/widgets/widgets.dart';
+import 'package:gaia/repositories/product_list/product_list_repositories.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({super.key, required this.title});
@@ -22,6 +23,12 @@ class _ProductListState extends State<ProductList> {
         itemCount: 50,
         separatorBuilder: (context, index) => Divider(),
         itemBuilder: (context, index) => ListItem(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ProductListRepositories().getProductList();
+        },
+        child: const Icon(Icons.download),
       ),
     );
   }
