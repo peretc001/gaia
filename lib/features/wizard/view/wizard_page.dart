@@ -59,7 +59,7 @@ class _WizardPageState extends State<WizardPage> {
     });
     if (_formKey.currentState!.validate()) {
       // Переход на главную страницу после сохранения данных
-      Navigator.of(context).pushReplacementNamed('/products');
+      Navigator.of(context).pushReplacementNamed('/calendar');
     }
   }
 
