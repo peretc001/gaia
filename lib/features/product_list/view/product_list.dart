@@ -16,7 +16,7 @@ class _ProductListState extends State<ProductList> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: theme.colorScheme.inversePrimary,
+        backgroundColor: theme.colorScheme.primary,
         title: Text(widget.title),
       ),
       body: ListView.separated(
