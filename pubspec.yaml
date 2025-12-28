@@ -27,6 +27,7 @@ dependencies:
   flutter_svg: ^2.2.3
   dio: ^5.9.0
   google_fonts: ^6.3.3
+  firebase_core: ^4.3.0
 
 dev_dependencies:
   flutter_test:

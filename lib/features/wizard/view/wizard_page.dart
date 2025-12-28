@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gaia/theme/index.dart';
 
 class WizardPage extends StatefulWidget {
   const WizardPage({super.key});
