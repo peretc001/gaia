@@ -25,7 +25,7 @@ class _CalendarPageState extends State<CalendarPage> {
     final now = DateTime.now();
     final currentYear = now.year;
     final currentMonth = now.month;
-    
+
     _events = [
       // События на 30 число текущего месяца (как на скриншоте)
       Event(
@@ -33,7 +33,8 @@ class _CalendarPageState extends State<CalendarPage> {
         title: 'Daily meeting Run',
         startTime: DateTime(currentYear, currentMonth, 30, 10, 0),
         endTime: DateTime(currentYear, currentMonth, 30, 10, 30),
-        description: 'Ежедневная встреча команды для обсуждения текущих задач и прогресса проекта.',
+        description:
+            'Ежедневная встреча команды для обсуждения текущих задач и прогресса проекта.',
         type: 'Телемост',
       ),
       Event(
@@ -49,15 +50,16 @@ class _CalendarPageState extends State<CalendarPage> {
         title: 'Sprint Retrospective Run',
         startTime: DateTime(currentYear, currentMonth, 30, 14, 0),
         endTime: DateTime(currentYear, currentMonth, 30, 15, 0),
-        description: 'Ретроспектива спринта для анализа проделанной работы и планирования улучшений.',
+        description:
+            'Ретроспектива спринта для анализа проделанной работы и планирования улучшений.',
         type: 'Телемост',
       ),
       // События для других дней для демонстрации индикаторов
       Event(
         id: '4',
         title: 'Планирование',
-        startTime: DateTime(currentYear, currentMonth, 1, 9, 0),
-        endTime: DateTime(currentYear, currentMonth, 1, 10, 0),
+        startTime: DateTime(currentYear, currentMonth, 3, 9, 0),
+        endTime: DateTime(currentYear, currentMonth, 3, 10, 0),
         description: 'Планирование задач на месяц.',
         type: 'Встреча',
       ),
@@ -181,6 +183,15 @@ class _CalendarPageState extends State<CalendarPage> {
     return _events.where((event) => event.isOnDate(_selectedDate!)).toList();
   }
 
+  String getCurrentDateString(DateTime? date) {
+    if (date == null) return '';
+
+    final day = date.day.toString().padLeft(2, '0');
+    final month = date.month.toString().padLeft(2, '0');
+    final year = date.year.toString();
+    return '$day.$month.$year';
+  }
+
   void _handleDateSelected(DateTime date) {
     setState(() {
       _selectedDate = date;
@@ -211,7 +222,7 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
             // Список событий
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -222,7 +233,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         vertical: 8.0,
                       ),
                       child: Text(
-                        'События на ${_selectedDate?.day}.${_selectedDate?.month}.${_selectedDate?.year}',
+                        'События на ${getCurrentDateString(_selectedDate)}',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -254,4 +265,3 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 }
-

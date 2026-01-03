@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gaia/features/calendar/models/models.dart';
+import 'package:gaia/theme/index.dart';
 
 class CalendarWidget extends StatefulWidget {
   final DateTime? selectedDate;
@@ -27,18 +28,18 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     super.initState();
     _selectedDate = widget.selectedDate ?? DateTime.now();
     _currentMonth = DateTime(_selectedDate.year, _selectedDate.month, 1);
-    _pageController = PageController(
-      initialPage: _getInitialPageIndex(),
-    );
+    _pageController = PageController(initialPage: _getInitialPageIndex());
   }
 
   @override
   void didUpdateWidget(CalendarWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.selectedDate != oldWidget.selectedDate && widget.selectedDate != null) {
+    if (widget.selectedDate != oldWidget.selectedDate &&
+        widget.selectedDate != null) {
       _selectedDate = widget.selectedDate!;
       final newMonth = DateTime(_selectedDate.year, _selectedDate.month, 1);
-      if (newMonth.year != _currentMonth.year || newMonth.month != _currentMonth.month) {
+      if (newMonth.year != _currentMonth.year ||
+          newMonth.month != _currentMonth.month) {
         _currentMonth = newMonth;
         final newPageIndex = _getPageIndexForMonth(newMonth);
         _pageController.jumpToPage(newPageIndex);
@@ -80,7 +81,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       Color(0xFFFFB6C1), // Light pink
       Color(0xFFFFFF00), // Yellow
     ];
-    return events.take(3).map((e) => colors[events.indexOf(e) % colors.length]).toList();
+    return events
+        .take(3)
+        .map((e) => colors[events.indexOf(e) % colors.length])
+        .toList();
   }
 
   @override
@@ -173,11 +177,13 @@ class _CalendarWidgetState extends State<CalendarWidget> {
 
                 final day = dayOffset + 1;
                 final date = DateTime(month.year, month.month, day);
-                final isSelected = _selectedDate.year == date.year &&
+                final isSelected =
+                    _selectedDate.year == date.year &&
                     _selectedDate.month == date.month &&
                     _selectedDate.day == date.day;
                 final isWeekend = date.weekday == 6 || date.weekday == 7;
-                final isToday = date.year == DateTime.now().year &&
+                final isToday =
+                    date.year == DateTime.now().year &&
                     date.month == DateTime.now().month &&
                     date.day == DateTime.now().day;
                 final dayEvents = _getEventsForDate(date);
@@ -193,7 +199,11 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   child: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isSelected ? Colors.black : Colors.transparent,
+                      color: isSelected
+                          ? Colors.black
+                          : isToday
+                          ? primaryColor
+                          : Colors.transparent,
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -207,14 +217,14 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                 : FontWeight.normal,
                             color: isSelected
                                 ? Colors.white
+                                : isToday
+                                ? Colors.white
                                 : isWeekend
-                                    ? Colors.grey[400]
-                                    : isToday
-                                        ? Colors.red
-                                        : Colors.black,
+                                ? Colors.grey[400]
+                                : Colors.black,
                           ),
                         ),
-                        if (hasEvents)
+                        if (hasEvents || (!isSelected && !isToday))
                           Container(
                             margin: const EdgeInsets.only(top: 2),
                             height: 6,
@@ -222,15 +232,21 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: _getEventIndicatorColors(dayEvents)
                                   .take(3)
-                                  .map((color) => Container(
-                                        margin: const EdgeInsets.symmetric(horizontal: 1),
-                                        height: 3,
-                                        width: 6,
-                                        decoration: BoxDecoration(
-                                          color: color,
-                                          borderRadius: BorderRadius.circular(1.5),
+                                  .map(
+                                    (color) => Container(
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 1,
+                                      ),
+                                      height: 3,
+                                      width: 6,
+                                      decoration: BoxDecoration(
+                                        color: color,
+                                        borderRadius: BorderRadius.circular(
+                                          1.5,
                                         ),
-                                      ))
+                                      ),
+                                    ),
+                                  )
                                   .toList(),
                             ),
                           ),
@@ -270,4 +286,3 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     super.dispose();
   }
 }
-
