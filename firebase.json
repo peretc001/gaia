@@ -1,1 +1,40 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"gaia-2026","appId":"1:613161161016:android:420f9487b1e9e16c14f1cd","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"gaia-2026","appId":"1:613161161016:ios:d45ca12b87431d9f14f1cd","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"gaia-2026","configurations":{"android":"1:613161161016:android:420f9487b1e9e16c14f1cd","ios":"1:613161161016:ios:d45ca12b87431d9f14f1cd"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "gaia-2026",
+          "appId": "1:613161161016:android:420f9487b1e9e16c14f1cd",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "gaia-2026",
+          "appId": "1:613161161016:ios:d45ca12b87431d9f14f1cd",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "gaia-2026",
+          "configurations": {
+            "android": "1:613161161016:android:420f9487b1e9e16c14f1cd",
+            "ios": "1:613161161016:ios:d45ca12b87431d9f14f1cd"
+          }
+        }
+      }
+    }
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000
+    },
+    "singleProjectMode": true
+  }
+}

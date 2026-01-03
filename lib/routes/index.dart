@@ -7,7 +7,8 @@ import '../features/calendar/index.dart';
 final routes = {
   '/products': (context) => const ProductList(title: 'Welcome to GAIA'),
   '/page': (context) => const ProductPage(),
-  '/': (context) => const CalendarPage(),
+  '/calendar': (context) => const CalendarPage(),
   '/wizard': (context) => const WizardPage(),
-  '/calendar': (context) => const AuthPage(),
+  '/': (context) => const AuthPage(),
+  '/register': (context) => const RegisterPage(),
 };

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import '../auth_service.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<AuthPage> createState() => _AuthPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _AuthPageState extends State<AuthPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   final _authService = AuthService();
   bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -21,6 +23,7 @@ class _AuthPageState extends State<AuthPage> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -32,7 +35,7 @@ class _AuthPageState extends State<AuthPage> {
       });
 
       try {
-        await _authService.signInWithEmailAndPassword(
+        await _authService.signUpWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
@@ -41,7 +44,7 @@ class _AuthPageState extends State<AuthPage> {
           setState(() {
             _isLoading = false;
           });
-          // После успешной авторизации переходим на страницу wizard
+          // После успешной регистрации переходим на страницу wizard
           Navigator.of(context).pushReplacementNamed('/wizard');
         }
       } catch (e) {
@@ -71,7 +74,7 @@ class _AuthPageState extends State<AuthPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Авторизация',
+                    'Регистрация',
                     style: theme.textTheme.headlineLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -127,6 +130,37 @@ class _AuthPageState extends State<AuthPage> {
                       return null;
                     },
                   ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _confirmPasswordController,
+                    obscureText: _obscureConfirmPassword,
+                    decoration: InputDecoration(
+                      labelText: 'Подтвердите пароль',
+                      hintText: 'Введите пароль еще раз',
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureConfirmPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureConfirmPassword = !_obscureConfirmPassword;
+                          });
+                        },
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Пожалуйста, подтвердите пароль';
+                      }
+                      if (value != _passwordController.text) {
+                        return 'Пароли не совпадают';
+                      }
+                      return null;
+                    },
+                  ),
                   if (_errorMessage != null) ...[
                     const SizedBox(height: 16),
                     Container(
@@ -165,16 +199,16 @@ class _AuthPageState extends State<AuthPage> {
                             width: 20,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : const Text('Войти'),
+                        : const Text('Зарегистрироваться'),
                   ),
                   const SizedBox(height: 16),
                   TextButton(
                     onPressed: _isLoading
                         ? null
                         : () {
-                            Navigator.of(context).pushNamed('/register');
+                            Navigator.of(context).pop();
                           },
-                    child: const Text('Нет аккаунта? Зарегистрироваться'),
+                    child: const Text('Уже есть аккаунт? Войти'),
                   ),
                 ],
               ),
@@ -185,3 +219,4 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 }
+
