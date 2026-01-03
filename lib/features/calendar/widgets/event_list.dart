@@ -50,7 +50,7 @@ class _EventItem extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
         decoration: BoxDecoration(
           color: isHighlighted
-              ? const Color(0xFFE3F2FD).withOpacity(0.5)
+              ? const Color(0xFFE3F2FD).withValues(alpha: 0.5)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
