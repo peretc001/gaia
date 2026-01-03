@@ -41,8 +41,7 @@ class _AuthPageState extends State<AuthPage> {
           setState(() {
             _isLoading = false;
           });
-          // После успешной авторизации переходим на страницу wizard
-          Navigator.of(context).pushReplacementNamed('/wizard');
+          // AuthWrapper автоматически перенаправит на нужную страницу
         }
       } catch (e) {
         if (mounted) {

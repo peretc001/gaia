@@ -11,12 +11,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'GAIA',
       theme: theme,
+      initialRoute: '/',
       routes: routes,
       locale: const Locale('ru', 'RU'),
-      supportedLocales: const [
-        Locale('ru', 'RU'),
-        Locale('en', 'US'),
-      ],
+      supportedLocales: const [Locale('ru', 'RU'), Locale('en', 'US')],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
