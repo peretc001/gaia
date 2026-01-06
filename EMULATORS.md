@@ -10,6 +10,8 @@ firebase emulators:start
 
 Это запустит:
 - **Auth Emulator** на порту `9099`
+- **Firestore Emulator** на порту `8090`
+- **Realtime Database Emulator** на порту `9000`
 - **Emulator UI** на порту `4000` (веб-интерфейс для управления эмуляторами)
 
 ## Использование
@@ -24,6 +26,8 @@ firebase emulators:start
 
 Здесь вы можете:
 - Просматривать пользователей, созданных в Auth Emulator
+- Просматривать и редактировать данные в Firestore Emulator
+- Просматривать данные в Realtime Database Emulator
 - Управлять данными эмуляторов
 - Просматривать логи
 
@@ -42,5 +46,7 @@ firebase emulators:start
 - Эмуляторы работают только в **debug режиме**
 - Все данные в эмуляторах хранятся локально и удаляются при остановке
 - Для production используйте реальный Firebase проект
+
+
 
 

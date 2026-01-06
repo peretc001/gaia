@@ -1,14 +1,15 @@
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gaia/app.dart';
-import 'package:gaia/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
 
   // Подключение к эмуляторам в debug режиме
   if (kDebugMode) {
@@ -16,8 +17,18 @@ void main() async {
       // Для Android эмулятора используем 10.0.2.2 вместо localhost
       // Для iOS симулятора и других платформ используем localhost
       final host = Platform.isAndroid ? '10.0.2.2' : 'localhost';
+
+      // Подключение к Firebase Auth Emulator
       await FirebaseAuth.instance.useAuthEmulator(host, 9099);
       debugPrint('✅ Подключено к Firebase Auth Emulator на $host:9099');
+
+      // Подключение к Firestore Emulator
+      FirebaseFirestore.instance.useFirestoreEmulator(host, 8090);
+      debugPrint('✅ Подключено к Firestore Emulator на $host:8090');
+
+      // Подключение к Realtime Database Emulator
+      FirebaseDatabase.instance.useDatabaseEmulator(host, 9000);
+      debugPrint('✅ Подключено к Realtime Database Emulator на $host:9000');
     } catch (e) {
       debugPrint('⚠️ Не удалось подключиться к эмулятору: $e');
       debugPrint(

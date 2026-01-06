@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaia/database_services.dart';
 import 'package:gaia/features/calendar/models/models.dart';
 import 'package:gaia/theme/index.dart';
 
@@ -87,6 +88,14 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         .toList();
   }
 
+  Future<void> _handleSubmit() async {
+    await DatabaseServices().create(path: 'data1', data: {'title': '123 '});
+    // DataSnapshot? snapshot = await DatabaseServices().read(path: 'data1');
+    // print(snapshot?.value);
+    // await DatabaseServices().updare(path: 'data1', data: {"title2": "new"});
+    // await DatabaseServices().delete(path: 'data1');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -103,6 +112,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+              ElevatedButton(
+                onPressed: _handleSubmit,
+                child: const Text('Войти'),
               ),
             ],
           ),
