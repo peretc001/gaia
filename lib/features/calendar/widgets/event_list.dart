@@ -5,11 +5,7 @@ class EventList extends StatelessWidget {
   final List<Event> events;
   final Function(Event) onEventTap;
 
-  const EventList({
-    super.key,
-    required this.events,
-    required this.onEventTap,
-  });
+  const EventList({super.key, required this.events, required this.onEventTap});
 
   @override
   Widget build(BuildContext context) {
@@ -107,10 +103,7 @@ class _EventItem extends StatelessWidget {
             // Время
             Text(
               event.timeRange,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Color(0xFF666666),
-              ),
+              style: const TextStyle(fontSize: 14, color: Color(0xFF666666)),
             ),
             const SizedBox(width: 12),
           ],
@@ -119,4 +112,3 @@ class _EventItem extends StatelessWidget {
     );
   }
 }
-

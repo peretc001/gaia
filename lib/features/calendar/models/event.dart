@@ -28,5 +28,31 @@ class Event {
     final end = '${endTime.hour.toString().padLeft(2, '0')}:${endTime.minute.toString().padLeft(2, '0')}';
     return '$start - $end';
   }
+
+  // Сериализация для базы данных
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'startTime': startTime.toIso8601String(),
+      'endTime': endTime.toIso8601String(),
+      'description': description,
+      'type': type,
+      'location': location,
+    };
+  }
+
+  // Десериализация из базы данных
+  factory Event.fromMap(Map<String, dynamic> map) {
+    return Event(
+      id: map['id'] as String,
+      title: map['title'] as String,
+      startTime: DateTime.parse(map['startTime'] as String),
+      endTime: DateTime.parse(map['endTime'] as String),
+      description: map['description'] as String,
+      type: map['type'] as String,
+      location: map['location'] as String?,
+    );
+  }
 }
 
