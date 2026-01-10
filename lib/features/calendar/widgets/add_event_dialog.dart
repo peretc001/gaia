@@ -238,7 +238,7 @@ class _AddEventDialogState extends State<AddEventDialog> {
                 const SizedBox(height: 16),
                 // Тип события
                 DropdownButtonFormField<String>(
-                  value: _selectedType,
+                  initialValue: _selectedType,
                   decoration: const InputDecoration(
                     labelText: 'Тип события',
                     border: OutlineInputBorder(),
