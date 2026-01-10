@@ -41,7 +41,9 @@ class _AuthPageState extends State<AuthPage> {
           setState(() {
             _isLoading = false;
           });
+
           // AuthWrapper автоматически перенаправит на нужную страницу
+          Navigator.of(context).pushReplacementNamed('/calendar');
         }
       } catch (e) {
         if (mounted) {

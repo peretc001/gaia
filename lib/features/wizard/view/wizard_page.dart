@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gaia/database_services.dart';
 
 class WizardPage extends StatefulWidget {
   const WizardPage({super.key});
@@ -53,13 +55,76 @@ class _WizardPageState extends State<WizardPage> {
     super.dispose();
   }
 
-  void _handleSubmit() {
+  void _handleSubmit() async {
     setState(() {
       _hasSubmitted = true;
     });
     if (_formKey.currentState!.validate()) {
-      // Переход на главную страницу после сохранения данных
-      Navigator.of(context).pushReplacementNamed('/calendar');
+      try {
+        // Получение текущего пользователя
+        final user = FirebaseAuth.instance.currentUser;
+        if (user == null) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Ошибка: пользователь не авторизован'),
+              ),
+            );
+          }
+          return;
+        }
+
+        // Получение значений полей формы
+        final lastMenstruationDate = _lastMenstruationDateText;
+        final cycleDuration = int.tryParse(_cycleDurationController.text) ?? 0;
+        final menstruationDuration =
+            int.tryParse(_menstruationDurationController.text) ?? 0;
+        final age = _ageController.text.isNotEmpty
+            ? int.tryParse(_ageController.text)
+            : null;
+        final height = _heightController.text.isNotEmpty
+            ? int.tryParse(_heightController.text)
+            : null;
+        final weight = _weightController.text.isNotEmpty
+            ? int.tryParse(_weightController.text)
+            : null;
+
+        // Формирование данных для сохранения
+        final body = <String, dynamic>{
+          'lastMenstruationDate': lastMenstruationDate,
+          'cycleDuration': cycleDuration,
+          'menstruationDuration': menstruationDuration,
+        };
+
+        // Добавляем необязательные поля только если они заполнены
+        if (age != null) body['age'] = age;
+        if (height != null) body['height'] = height;
+        if (weight != null) body['weight'] = weight;
+
+        // Сохранение данных под пользователем
+        final path = 'users/${user.uid}/wizard';
+        await DatabaseServices().create(path: path, data: body);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Данные успешно сохранены'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          // Переход на главную страницу после сохранения данных
+          Navigator.of(context).pushReplacementNamed('/calendar');
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Ошибка при сохранении: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
     }
   }
 

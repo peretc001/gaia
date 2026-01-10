@@ -89,6 +89,9 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
 
   Future<void> _handleSubmit() async {
+    // await AuthService().signOut();
+    // Navigator.of(context).pushReplacementNamed('/');
+
     await DatabaseServices().create(path: 'data1', data: {'title': '123 '});
     // DataSnapshot? snapshot = await DatabaseServices().read(path: 'data1');
     // print(snapshot?.value);
